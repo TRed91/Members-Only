@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+</head>
+<body>
+    <h1>Sign Up</h1>
+    <h2>To our exclusive OnlyMembers Club!</h2>
+    <hr>
+    <form action="/sign-up" method="post">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <label for="firstname">First Name</label>
+        <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
+        <label for="lastname">Last Name</label>
+        <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
+        <label for="pw">Password</label>
+        <input type="password" id="pw" name="pw" minlength="8" required>
+        <label for="cpw">Confirm Password</label>
+        <input type="password" id="cpw" name="cpw" minlength="8" required>
+        <button>Submit</button>
+    </form>
+    <hr>
+    <% if (locals.errors) { %>
+        <% errors.forEach((err) => { %>
+            <p class="errMsg"><%= err.msg %></p>
+        <% }) %>
+    <% } %>
+</body>
+</html>
