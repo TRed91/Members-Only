@@ -2,20 +2,26 @@ const express = require('express');
 require('dotenv').config();
 const path = require('node:path');
 const pool = require('./db/pool');
-const signupRoute = require('./routes/signupRoute');
 const session = require('express-session');
 const pgStore = require('connect-pg-simple')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
+const signupRoute = require('./routes/signupRoute');
+const secretRoute = require('./routes/secretRoute');
+const loginRoute = require('./routes/loginRoute');
 
 const app = express();
 
+// Use ejs views
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// Use static files
 app.use(express.static('public'));
 
+// Session handling
+    // save session in db
 app.use(session({
     store: new pgStore({
         pool: pool,
@@ -29,6 +35,7 @@ app.use(session({
 app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
 
+// Define local strategy
 passport.use(
     new LocalStrategy(async(username, password, done) => {
         try {
@@ -48,6 +55,7 @@ passport.use(
     })
 );
 
+// use cookie to authorize logged in users
 passport.serializeUser((user, done) => {
     return done(null, user.userid);
 });
@@ -62,7 +70,21 @@ passport.deserializeUser(async(id, done) => {
     }
 });
 
-app.use('/sign-up', signupRoute);
+// Use routes
+app.get('/', (req, res) => {res.send(req.user)});
 
+app.use('/sign-up', signupRoute);
+app.use('/login', loginRoute);
+app.use('/secret', secretRoute);
+app.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
+
+// Listen to post
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {console.log(`Express app listening to port ${PORT}`)});
