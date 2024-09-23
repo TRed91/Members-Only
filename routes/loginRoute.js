@@ -6,7 +6,8 @@ const passport = require('passport');
 router.get('/', controller.loginPageGet);
 router.post('/', passport.authenticate('local', {
     successRedirect: '/',
-    failureRedirect: '/login'
+    failureRedirect: '/login',
+    failureMessage: true
 }));
 
 module.exports = router;

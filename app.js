@@ -41,10 +41,13 @@ passport.use(
         try {
             const { rows } = await pool.query('SELECT * FROM UserData WHERE UserName = $1', [username]);
             const user = rows[0];
-            const match = bcrypt.compare(password, user.userpassword);
+
             if (!user) {
                 return done(null, false, { message: 'Wrong username'});
             }
+            
+            const match = await bcrypt.compare(password, user.userpassword);
+            
             if (!match) {
                 return done(null, false, { message: 'Wrong password' });
             }
