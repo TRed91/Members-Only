@@ -5,8 +5,12 @@ const addUser = async ({username, firstname, lastname, pw}) => {
                 VALUES ('1', $1, $2, $3, $4);`, [ username, pw, firstname, lastname ]);
 }
 
-const upgradeUser = async (id) => {
+const upgradeUserMember = async (id) => {
     await pool.query(`UPDATE userdata SET MemberStatusID = 2 WHERE userid = $1;`, [id]);
+}
+
+const upgradeUserAdmin = async (id) => {
+    await pool.query(`UPDATE userdata SET MemberStatusID = 3 WHERE userid = $1;`, [id]);
 }
 
 const writeMsg = async ({id, msgTitle, msg}) => {
@@ -23,9 +27,15 @@ const getMessages = async () => {
     return rows;
 }
 
+const deleteMessage = async (id) => {
+    await pool.query(`DELETE FROM usermessage WHERE messageid = $1`, [id]);
+}
+
 module.exports = {
     addUser,
-    upgradeUser,
+    upgradeUserMember,
+    upgradeUserAdmin,
     writeMsg,
-    getMessages
+    getMessages,
+    deleteMessage
 }

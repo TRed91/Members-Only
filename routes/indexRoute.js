@@ -9,5 +9,6 @@ router.post('/login', passport.authenticate('local', {
     failureRedirect: '/',
     failureMessage: true
 }));
+router.post('/delete', controller.deleteMessage);
 
 module.exports = router;

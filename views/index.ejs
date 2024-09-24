@@ -26,8 +26,8 @@
                         <div class="msgDate"><%= m.creationdate %></div>
                     <% } %>
                     <% if (user.memberstatusid >= 3) { %>
-                        <form action="/delete">
-                            <input type="text" hidden id="<%= m.messageid %>" name="<%= m.messageid %>">
+                        <form action="/delete" method="post">
+                            <input type="text" hidden id="msgDelete" name="msgDeleteID" value="<%= m.messageid %>">
                             <button class="deleteBtn">Delete</button>
                         </form>
                     <% } %>

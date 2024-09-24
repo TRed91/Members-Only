@@ -11,3 +11,13 @@ exports.indexPageGet = async (req, res) => {
         res.render('index', {user: req.user,
                             messages: messages });
 }
+
+exports.deleteMessage = async (req, res) => {
+    try {
+        await db.deleteMessage(req.body.msgDeleteID);
+        res.redirect('/');
+    } catch (err) {
+        console.log('Delete Message Error: ', err.message);
+        res.redirect('/');
+    }
+}
