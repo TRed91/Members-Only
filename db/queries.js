@@ -16,7 +16,7 @@ const writeMsg = async ({id, msgTitle, msg}) => {
 
 const getMessages = async () => {
      const { rows } = await pool.query(`
-        SELECT username, title, messagetext, creationdate 
+        SELECT username, title, messagetext, creationdate, messageid 
         FROM userdata u 
         INNER JOIN usermessage m ON u.userid = m.userid;
         `);

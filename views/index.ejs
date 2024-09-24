@@ -13,16 +13,27 @@
         <% if (user.memberstatusid >= 2) { %>
             <a href="/new-message">New Message</a>
             <hr>
-            <div class="messagesContainer">
-                <% messages.forEach(m => { %>
-                    <div class="msgCard">
-                        <div class="msgCreator"><%= m.username %></div>
-                        <div class="msgTitle"><%= m.title %></div>
-                        <div class="msgText"><%= m.messagetext %></div>
-                    </div>
-                <% }); %>
-            </div>
         <% } %>
+        <div class="messagesContainer">
+            <% messages.forEach(m => { %>
+                <div class="msgCard">
+                    <% if (user.memberstatusid >= 2) { %>
+                        <div class="msgCreator"><%= m.username %></div>
+                    <% } %>
+                    <div class="msgTitle"><%= m.title %></div>
+                    <div class="msgText"><%= m.messagetext %></div>
+                    <% if (user.memberstatusid >= 2) { %>
+                        <div class="msgDate"><%= m.creationdate %></div>
+                    <% } %>
+                    <% if (user.memberstatusid >= 3) { %>
+                        <form action="/delete">
+                            <input type="text" hidden id="<%= m.messageid %>" name="<%= m.messageid %>">
+                            <button class="deleteBtn">Delete</button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }); %>
+        </div>
     <% } else { %>
         <h1>Please log in</h1>
         <hr>
