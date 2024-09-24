@@ -9,6 +9,20 @@
     <%- include('partials/header.ejs') %>
     <% if (user) { %>
         <h1>Welcome <%= user.username %>!</h1>
+        <hr>
+        <% if (user.memberstatusid >= 2) { %>
+            <a href="/new-message">New Message</a>
+            <hr>
+            <div class="messagesContainer">
+                <% messages.forEach(m => { %>
+                    <div class="msgCard">
+                        <div class="msgCreator"><%= m.username %></div>
+                        <div class="msgTitle"><%= m.title %></div>
+                        <div class="msgText"><%= m.messagetext %></div>
+                    </div>
+                <% }); %>
+            </div>
+        <% } %>
     <% } else { %>
         <h1>Please log in</h1>
         <hr>
@@ -19,8 +33,8 @@
             <input type="password" id="password" name="password">
             <button>Submit</button>
         </form>
-        <% if (locals.msg) { %>
-            <p><%= msg %></p>
+        <% if (locals.errMsg) { %>
+            <p class="errMsg"><%= errMsg %></p>
         <%}%>
     <% } %>
 </body>

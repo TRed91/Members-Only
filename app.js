@@ -9,7 +9,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const signupRoute = require('./routes/signupRoute');
 const secretRoute = require('./routes/secretRoute');
-const loginRoute = require('./routes/loginRoute');
+const indexRoute = require('./routes/indexRoute');
+const newMessageRoute = require('./routes/newMessageRoute');
 
 const app = express();
 
@@ -47,7 +48,7 @@ passport.use(
             }
             
             const match = await bcrypt.compare(password, user.userpassword);
-            
+
             if (!match) {
                 return done(null, false, { message: 'Wrong password' });
             }
@@ -74,11 +75,10 @@ passport.deserializeUser(async(id, done) => {
 });
 
 // Use routes
-app.get('/', (req, res) => {res.send(req.user)});
-
+app.use('/', indexRoute);
 app.use('/sign-up', signupRoute);
-app.use('/login', loginRoute);
 app.use('/secret', secretRoute);
+app.use('/new-message', newMessageRoute);
 app.get('/logout', (req, res, next) => {
     req.logout((err) => {
         if (err) {

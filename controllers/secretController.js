@@ -2,7 +2,7 @@ const db = require('../db/queries');
 
 exports.secretPageGet = (req, res) => {
     if (!req.user) {
-        res.redirect('/login');
+        res.redirect('/');
     } else {
         res.render('secret', { user: req.user });
     }
