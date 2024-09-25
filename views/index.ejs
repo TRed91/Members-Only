@@ -12,10 +12,8 @@
         <main class="logged-in main">
             <div>
                 <h1>Welcome <%= user.username %>!</h1>
-                <hr>
                 <% if (user.memberstatusid >= 2) { %>
-                    <a href="/new-message">New Message</a>
-                    <hr>
+                    <div class="newMsg-link"><a href="/new-message">New Message</a></div>
                 <% } %>
                 <div class="messagesContainer">
                     <% messages.forEach(m => { %>

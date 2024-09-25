@@ -20,7 +20,7 @@ a, a:visited {
 }
 
 body {
-    height: 100vh;
+    height: 80vh;
 }
 
 body {
@@ -63,6 +63,12 @@ body {
     align-items: flex-start;
     margin-top: 2rem;
     text-align: center;
+}
+
+.logged-in > div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .login-container {
@@ -170,4 +176,20 @@ button:active {
     flex-direction: column;
     gap: 20px;
     align-items: center;
+}
+
+h2 {
+    text-shadow: 0px 0px 3px #e7adf0;
+    font-weight: 600;
+}
+
+.newMsg-link > a{
+    font-size: 18px;
+    font-weight: bold;
+    padding: 3px;
+    border-bottom: 1px solid black;
+}
+
+.newMsg-link > a:hover{
+    text-shadow: 1px 1px 2px #fcd5ff;
 }
