@@ -79,14 +79,6 @@ app.use('/', indexRoute);
 app.use('/sign-up', signupRoute);
 app.use('/secret', secretRoute);
 app.use('/new-message', newMessageRoute);
-app.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        res.redirect('/');
-    });
-});
 
 // Listen to post
 const PORT = process.env.PORT || 3000;

@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Message</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/form-styles.css">
 </head>
 <body>
-    <h2>Create new message!</h2>
-    <hr>
-    <form action="/new-message" method="post">
-        <label for="msgTitle">Title</label>
-        <input type="text" id="msgTitle" name="msgTitle" placeholder="Title" required>
-        <textarea name="msg" id="msg" required></textarea>
-        <button type="submit">Post</button>
-    </form>
+    <%- include('partials/header.ejs') %>
+    <main class="main">
+        <div class="msgForm-container">
+            <h2>Create a new message!</h2>
+            <form action="/new-message" method="post">
+                <div class="input-container">
+                    <input type="text" id="msgTitle" name="msgTitle" placeholder="Title" class="auth-input" required>
+                </div>
+                <textarea name="msg" id="msg" required class="auth-input textarea"></textarea>
+                <button type="submit">Post</button>
+            </form>
+        </div>
+    </main>
 </body>
 </html>

@@ -10,5 +10,13 @@ router.post('/login', passport.authenticate('local', {
     failureMessage: true
 }));
 router.post('/delete', controller.deleteMessage);
+router.get('/logout', (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
 
 module.exports = router;

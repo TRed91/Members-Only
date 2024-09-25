@@ -17,7 +17,7 @@ const validateUser = [
 ];
 
 exports.pageGet = (req, res) => {
-    res.render('signup');
+    res.render('signup', {user: req.user});
 }
 
 exports.createUserPost = [

@@ -4,29 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/signup-styles.css">
 </head>
 <body>
-    <h1>Sign Up</h1>
-    <h2>To our exclusive OnlyMembers Club!</h2>
-    <hr>
-    <form action="/sign-up" method="post">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" placeholder="Username" required>
-        <label for="firstname">First Name</label>
-        <input type="text" id="firstname" name="firstname" placeholder="First Name" required>
-        <label for="lastname">Last Name</label>
-        <input type="text" id="lastname" name="lastname" placeholder="Last Name" required>
-        <label for="pw">Password</label>
-        <input type="password" id="pw" name="pw" minlength="8" required>
-        <label for="cpw">Confirm Password</label>
-        <input type="password" id="cpw" name="cpw" minlength="8" required>
-        <button>Submit</button>
-    </form>
-    <hr>
-    <% if (locals.errors) { %>
-        <% errors.forEach((err) => { %>
-            <p class="errMsg"><%= err.msg %></p>
-        <% }) %>
+    <%- include('partials/header.ejs') %>
+    <% if (locals.user) { %>
+        <main class="main">
+            <div>
+                <h2>You are already logged in!</h2>
+            </div>
+        </main>
+    <% } else { %>
+        <main class="main">
+            <div class="signup-container">
+                <h2>Join our OnlyMembers Club!</h2>
+                <form action="/sign-up" method="post">
+                    <div class="input-container">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Username" class="auth-input" required>
+                    </div>
+                    <div class="input-sub-container">
+                        <div class="input-container">
+                            <label for="firstname">First Name</label>
+                            <input type="text" id="firstname" name="firstname" placeholder="First Name" class="auth-input" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="lastname">Last Name</label>
+                            <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="auth-input" required>
+                        </div>
+                    </div>
+                    <div class="input-sub-container">
+                        <div class="input-container">
+                            <label for="pw">Password</label>
+                            <input type="password" id="pw" name="pw" minlength="8" class="auth-input" required>
+                        </div>
+                        <div class="input-container">
+                            <label for="cpw">Confirm Password</label>
+                            <input type="password" id="cpw" name="cpw" minlength="8" class="auth-input" required>
+                        </div>
+                    </div>
+                    <button>Sign Up</button>
+                </form>
+                <% if (locals.errors) { %>
+                    <% errors.forEach((err) => { %>
+                        <p class="errMsg"><%= err.msg %></p>
+                    <% }) %>
+                <% } %>
+            </div>
+        </main>
     <% } %>
+   
 </body>
 </html>

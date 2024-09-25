@@ -4,49 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <%- include('partials/header.ejs') %>
     <% if (user) { %>
-        <h1>Welcome <%= user.username %>!</h1>
-        <hr>
-        <% if (user.memberstatusid >= 2) { %>
-            <a href="/new-message">New Message</a>
-            <hr>
-        <% } %>
-        <div class="messagesContainer">
-            <% messages.forEach(m => { %>
-                <div class="msgCard">
-                    <% if (user.memberstatusid >= 2) { %>
-                        <div class="msgCreator"><%= m.username %></div>
-                    <% } %>
-                    <div class="msgTitle"><%= m.title %></div>
-                    <div class="msgText"><%= m.messagetext %></div>
-                    <% if (user.memberstatusid >= 2) { %>
-                        <div class="msgDate"><%= m.creationdate %></div>
-                    <% } %>
-                    <% if (user.memberstatusid >= 3) { %>
-                        <form action="/delete" method="post">
-                            <input type="text" hidden id="msgDelete" name="msgDeleteID" value="<%= m.messageid %>">
-                            <button class="deleteBtn">Delete</button>
-                        </form>
-                    <% } %>
+        <main class="logged-in main">
+            <div>
+                <h1>Welcome <%= user.username %>!</h1>
+                <hr>
+                <% if (user.memberstatusid >= 2) { %>
+                    <a href="/new-message">New Message</a>
+                    <hr>
+                <% } %>
+                <div class="messagesContainer">
+                    <% messages.forEach(m => { %>
+                        <div class="msgCard">
+                            <% if (user.memberstatusid >= 2) { %>
+                                <div class="msgCreator">From: <%= m.username %></div>
+                            <% } %>
+                            <div class="msgTitle"><strong><%= m.title %></strong></div>
+                            <div class="msgText"><%= m.messagetext %></div>
+                            <% if (user.memberstatusid >= 2) { %>
+                                <div class="msgDate"><%= m.creationdate.toString().substring(0,24) %></div>
+                            <% } %>
+                            <% if (user.memberstatusid >= 3) { %>
+                                <form action="/delete" method="post">
+                                    <input type="text" hidden id="msgDelete" name="msgDeleteID" value="<%= m.messageid %>">
+                                    <button class="deleteBtn">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    <% }); %>
                 </div>
-            <% }); %>
-        </div>
+            </div>
+        </main>
     <% } else { %>
-        <h1>Please log in</h1>
-        <hr>
-        <form action="/login" method="post">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="username">
-            <label for="userpassword">Password</label>
-            <input type="password" id="password" name="password">
-            <button>Submit</button>
-        </form>
-        <% if (locals.errMsg) { %>
-            <p class="errMsg"><%= errMsg %></p>
-        <%}%>
+        <main class="login-main main">
+            <div class="login-container">
+                <form action="/login" method="post">
+                    <div class="input-container">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="username" class="auth-input">
+                    </div>
+                    <div class="input-container">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" class="auth-input">
+                    </div>
+                    <button>Log In</button>
+                </form>
+                <% if (locals.errMsg) { %>
+                    <p class="errMsg"><%= errMsg %></p>
+                <%}%>
+            </div>
+        </main>
     <% } %>
 </body>
 </html>
